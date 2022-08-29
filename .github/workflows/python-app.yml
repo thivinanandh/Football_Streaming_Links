@@ -32,13 +32,13 @@ jobs:
 
     - name : Run Match link generation script
       run: |
-        mv match.html match_old.html
+        mv index.html match_old.html
         python match.py
         ls -lsrt
 
     - name: Check for modified files
       id: git-check
-      run: echo ::set-output name=modified::$(if [ -n "$(git diff match_old.html match.html)" ]; then echo "true"; else echo "false"; fi)
+      run: echo ::set-output name=modified::$(if [ -n "$(git diff match_old.html index.html)" ]; then echo "true"; else echo "false"; fi)
     
     - name: Generate Match.html
       if: steps.git-check.outputs.modified == 'true'
@@ -48,7 +48,7 @@ jobs:
         git config --global user.email thivinanandh@gmail.com
         git status
         
-        git add match.html
+        git add index.html
         git commit -m "Automatic Update-1"
         git push
       

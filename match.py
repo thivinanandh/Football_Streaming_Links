@@ -51,7 +51,7 @@ tableDF_valid = tableDF[tableDF["Link"].str.contains("http") ]
 templateLoader = FileSystemLoader(searchpath="./")
 templateEnv = Environment(loader=templateLoader)
 template = templateEnv.get_template('template.html')
-filename = "match.html"
+filename = "index.html"
 with open(filename, 'w') as fh:
     fh.write(template.render(
         my_string = "Hello Jinja2",
