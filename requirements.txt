@@ -3,3 +3,4 @@ bs4
 numpy
 requests
 jinja2
+lxml
