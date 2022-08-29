@@ -33,9 +33,9 @@ jobs:
       run: |
         git rm --cached match.html
         rm match.html
-        python matchnew.py
-        git config --local user.name thivinanandh
-        git config --local user.email thivinanandh@gmail.com
+        python match.py
+        git config --global user.name thivinanandh
+        git config --global user.email thivinanandh@gmail.com
         git status
         git remote -v
         git status
