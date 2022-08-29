@@ -33,7 +33,7 @@ jobs:
       run: |
         git rm --cached match.html
         rm match.html
-        python match.py
+        python matchnew.py
         git config --local user.name thivinanandh
         git config --local user.email thivinanandh@gmail.com
         git status
