@@ -28,20 +28,36 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Generate Match.html
-     
+    
+
+    - name : Run Match link generation script
       run: |
-        git rm --cached match.html
-        rm match.html
+        mv match.html match_old.html
         python match.py
+        ls -lsrt
+
+    - name: Check for modified files
+      id: git-check
+      run: echo ::set-output name=modified::$(if [ -n "$(git diff match_old.html match.html)" ]; then echo "true"; else echo "false"; fi)
+    
+    - name: Generate Match.html
+      if: steps.git-check.outputs.modified == 'true'
+      run: |
+        
         git config --global user.name thivinanandh
         git config --global user.email thivinanandh@gmail.com
         git status
-        git remote -v
-        git status
+        
         git add match.html
         git commit -m "Automatic Update-1"
-        git push origin master -f 
+        git push
+      
+    - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: origin/master
+        
         
 
 
