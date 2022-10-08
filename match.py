@@ -16,9 +16,9 @@ soup = BeautifulSoup(reqs.text, 'html.parser')
 table = soup.find( "table" )
 
 ## replace Watch with href Links 
-regex = '<td><a href=\"(.*?)\">.*?<\/a><\/td>'
-subst = '<td>\\1</td>'
-tableNew = re.sub(regex,subst,str(table),re.MULTILINE)
+regex = '<a href=\"(.*?)\">.*?<\/a>'
+subst = '\\1'
+tableNew = re.sub(regex,subst,str(table))
 tableDF = pd.read_html(str(tableNew))[0]
 c = ["Time","Match","Link"]
 tableDF.columns =c 
