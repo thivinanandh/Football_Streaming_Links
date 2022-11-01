@@ -1,5 +1,4 @@
 name: Python application
-
 on:
   push:
     branches: [ "master" ]
@@ -7,7 +6,6 @@ on:
     branches: [ "master" ]
   schedule:
     - cron: "*/30 * * * *"
-
 permissions:
   contents: write
   pages: write
@@ -16,12 +14,9 @@ permissions:
   deployments: write
   checks: write
   actions: write
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
       with:
@@ -36,26 +31,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    
-
     - name : Run Match link generation script
       run: |
         mv index.html match_old.html
         python match.py
         ls -lsrt
-
     - name: Check for modified files
       id: git-check
       run: echo ::set-output name=modified::$(if [ -n "$(git diff match_old.html index.html)" ]; then echo "true"; else echo "false"; fi)
-    
     - name: Generate Match.html
       if: steps.git-check.outputs.modified == 'true'
       run: |
-        
         git config --global user.name thivinanandh
         git config --global user.email thivinanandh@gmail.com
         git status
-        
         git add index.html
         git commit -m "Automatic Update-1"
     - name: Push changes
